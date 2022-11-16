@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1022909830472",
+    "project_id": "schooltransportthingtest",
+    "storage_bucket": "schooltransportthingtest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022909830472:android:e54614bc4399abf2ed4f7d",
+        "android_client_info": {
+          "package_name": "com.example.whatever"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022909830472-q1nop0hku1odh40qnt8eeggqhi0ob33e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNcbqW7HBLHi5pBG1QVOdB5iafDWDOZ-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022909830472-q1nop0hku1odh40qnt8eeggqhi0ob33e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
