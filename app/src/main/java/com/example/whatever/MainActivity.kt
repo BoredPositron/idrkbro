@@ -22,10 +22,10 @@ class MainActivity : AppCompatActivity() {
         students.layoutManager = LinearLayoutManager(this)
         students.adapter = studentAdapt
 
-        dbRef.addValueEventListener(object: ValueEventListener{
+        dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 studentList.clear()
-                for (name in snapshot.children){
+                for (name in snapshot.children) {
                     val currentStudent = name.getValue(Student::class.java)
                     studentList.add(currentStudent!!)
                     println(currentStudent)

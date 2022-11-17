@@ -10,8 +10,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
-class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, val dbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference(LocalDate.now().toString())): RecyclerView.Adapter<StudentAdapter.StudentDataHolder>() {
+class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, val dbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Attendance").child(LocalDate.now().toString())): RecyclerView.Adapter<StudentAdapter.StudentDataHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentDataHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.student, parent, false)
@@ -38,15 +40,21 @@ class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, 
             }
 
         })
+        val hour = LocalDateTime.now().hour
+        val minute = LocalDateTime.now().minute
+        val second = LocalDateTime.now().second
+        val time = "$hour:$minute:$second"
         holder.studentIn.setOnClickListener {
             dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child(currentStudent.Name.toString()).child("In Bus").setValue("True").addOnSuccessListener {
                 Toast.makeText(context, "Student in bus!", Toast.LENGTH_SHORT).show()
             }
+            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child(currentStudent.Name.toString()).child("In Time").setValue(time)
         }
         holder.studentOut.setOnClickListener {
             dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child(currentStudent.Name.toString()).child("In Bus").setValue("False").addOnSuccessListener {
                 Toast.makeText(context, "Student ded", Toast.LENGTH_SHORT).show()
             }
+            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child(currentStudent.Name.toString()).child("Out Time").setValue(time)
         }
         holder.studentName.text = currentStudent.Name.toString()
     }
