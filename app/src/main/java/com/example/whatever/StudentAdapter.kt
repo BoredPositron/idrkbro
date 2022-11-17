@@ -22,12 +22,12 @@ class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, 
 
     override fun onBindViewHolder(holder: StudentDataHolder, position: Int) {
         val currentStudent = StudentList[position]
-        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child(currentStudent.Name.toString()).child("In Bus").addValueEventListener(object: ValueEventListener{
+        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child("inBus").addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.value.toString() == "True"){
+                if (snapshot.value == true){
                     holder.studentIn.isEnabled = false
                     holder.studentOut.isEnabled = true
-                }else if (snapshot.value.toString() == "False"){
+                }else if (snapshot.value == false){
                     holder.studentOut.isEnabled = false
                     holder.studentIn.isEnabled = true
                 }else{
@@ -40,21 +40,16 @@ class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, 
             }
 
         })
-        val hour = LocalDateTime.now().hour
-        val minute = LocalDateTime.now().minute
-        val second = LocalDateTime.now().second
-        val time = "$hour:$minute:$second"
+
         holder.studentIn.setOnClickListener {
-            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child(currentStudent.Name.toString()).child("In Bus").setValue("True").addOnSuccessListener {
+            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).setValue(StudentInOut(currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}", true)).addOnSuccessListener {
                 Toast.makeText(context, "Student in bus!", Toast.LENGTH_SHORT).show()
             }
-            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child(currentStudent.Name.toString()).child("In Time").setValue(time)
         }
         holder.studentOut.setOnClickListener {
-            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child(currentStudent.Name.toString()).child("In Bus").setValue("False").addOnSuccessListener {
+            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).setValue(StudentInOut(currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}", false)).addOnSuccessListener {
                 Toast.makeText(context, "Student ded", Toast.LENGTH_SHORT).show()
             }
-            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child(currentStudent.Name.toString()).child("Out Time").setValue(time)
         }
         holder.studentName.text = currentStudent.Name.toString()
     }

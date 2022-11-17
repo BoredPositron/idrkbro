@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
                 for (name in snapshot.children) {
                     val currentStudent = name.getValue(Student::class.java)
                     studentList.add(currentStudent!!)
-                    println(currentStudent)
                 }
                 studentAdapt.notifyDataSetChanged()
             }
