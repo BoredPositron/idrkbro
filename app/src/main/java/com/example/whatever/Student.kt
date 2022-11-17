@@ -2,20 +2,18 @@ package com.example.whatever
 
 class Student {
     var Name: String? = null
-    var PickupLoc: String? = null
     var PickupNo: String? = null
-    var DropLoc: String? = null
     var DropNo: String? = null
     var RouteNo: String? = null
+    var Grade: String? = null
 
     constructor(){}
 
-    constructor(Name: String, PickupLoc: String, PickupNo: String, DropLoc: String, DropNo: String, RouteNo: String){
+    constructor(Name: String, PickupNo: String, DropNo: String, RouteNo: String, Grade: String){
         this.Name = Name
-        this.PickupLoc = PickupLoc
         this.PickupNo = PickupNo
-        this.DropLoc = DropLoc
         this.DropNo = DropNo
         this.RouteNo = RouteNo
+        this.Grade = Grade
     }
 }

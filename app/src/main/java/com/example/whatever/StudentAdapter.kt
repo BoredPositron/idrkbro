@@ -13,7 +13,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, val dbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Attendance").child(LocalDate.now().toString())): RecyclerView.Adapter<StudentAdapter.StudentDataHolder>() {
+class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, val dbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Attendance" ).child(LocalDate.now().toString())): RecyclerView.Adapter<StudentAdapter.StudentDataHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentDataHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.student, parent, false)
