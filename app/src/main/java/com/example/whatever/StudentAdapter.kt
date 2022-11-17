@@ -47,8 +47,8 @@ class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, 
             }
         }
         holder.studentOut.setOnClickListener {
-            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).setValue(StudentInOut(currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}", false)).addOnSuccessListener {
-                Toast.makeText(context, "Student ded", Toast.LENGTH_SHORT).show()
+            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).setValue(StudentInOut(currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}",    false)).addOnSuccessListener {
+                Toast.makeText(context, "Student not in bus!", Toast.LENGTH_SHORT).show()
             }
         }
         holder.studentName.text = currentStudent.Name.toString()
