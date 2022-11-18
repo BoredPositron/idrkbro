@@ -13,7 +13,9 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, val dbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Attendance" ).child(LocalDate.now().toString())): RecyclerView.Adapter<StudentAdapter.StudentDataHolder>() {
+class StudentAdapter
+    (val context: Context, val StudentList: ArrayList<Student>, val dbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Attendance" ).child(LocalDate.now().toString())):
+    RecyclerView.Adapter<StudentAdapter.StudentDataHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentDataHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.student, parent, false)
@@ -22,7 +24,8 @@ class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, 
 
     override fun onBindViewHolder(holder: StudentDataHolder, position: Int) {
         val currentStudent = StudentList[position]
-        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child("inBus").addValueEventListener(object: ValueEventListener{
+        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child("inBus")
+            .addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.value == true){
                     holder.studentIn.isEnabled = false
@@ -34,7 +37,6 @@ class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, 
                     holder.studentOut.isEnabled = false
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
@@ -42,18 +44,23 @@ class StudentAdapter(val context: Context, val StudentList: ArrayList<Student>, 
         })
 
         holder.studentIn.setOnClickListener {
-            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).setValue(StudentInOut(currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}", true)).addOnSuccessListener {
+            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
+                .setValue(StudentInOut
+                    (currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}",true))
+                .addOnSuccessListener {
                 Toast.makeText(context, "Student in bus!", Toast.LENGTH_SHORT).show()
             }
         }
         holder.studentOut.setOnClickListener {
-            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).setValue(StudentInOut(currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}",    false)).addOnSuccessListener {
+            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
+                .setValue(StudentInOut
+                    (currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}",false))
+                .addOnSuccessListener {
                 Toast.makeText(context, "Student not in bus!", Toast.LENGTH_SHORT).show()
             }
         }
         holder.studentName.text = currentStudent.Name.toString()
     }
-
     override fun getItemCount(): Int {
         return StudentList.size
     }
