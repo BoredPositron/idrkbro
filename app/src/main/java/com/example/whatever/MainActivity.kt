@@ -1,5 +1,7 @@
 package com.example.whatever
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -12,9 +14,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var studentAdapt: StudentAdapter
     private lateinit var studentList: ArrayList<Student>
     private lateinit var dbRef: DatabaseReference
+    private lateinit var sharedPreferences: SharedPreferences
+    var pref_key = "prefs"
+    var code_key = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        sharedPreferences = getSharedPreferences(pref_key, Context.MODE_PRIVATE)
         students = findViewById(R.id.StudentList)
         dbRef = FirebaseDatabase.getInstance().getReference("9")
         studentList = ArrayList()

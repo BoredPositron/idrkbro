@@ -25,7 +25,7 @@ class StudentAdapter
     override fun onBindViewHolder(holder: StudentDataHolder, position: Int) {
         val currentStudent = StudentList[position]
         dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString()).child("inBus")
-            .addValueEventListener(object: ValueEventListener{
+            .addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.value == true){
                     holder.studentIn.isEnabled = false
