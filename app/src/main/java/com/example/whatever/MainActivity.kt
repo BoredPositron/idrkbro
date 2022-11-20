@@ -16,18 +16,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dbRef: DatabaseReference
     private lateinit var sharedPreferences: SharedPreferences
     var pref_key = "prefs"
-    var code_key = ""
+    var route_key = "route"
+    var route = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         sharedPreferences = getSharedPreferences(pref_key, Context.MODE_PRIVATE)
+        route = sharedPreferences.getString(route_key, null)!!
         students = findViewById(R.id.StudentList)
-        dbRef = FirebaseDatabase.getInstance().getReference("9")
+        dbRef = FirebaseDatabase.getInstance().getReference(route)
         studentList = ArrayList()
         studentAdapt = StudentAdapter(this, studentList)
         students.layoutManager = LinearLayoutManager(this)
         students.adapter = studentAdapt
-
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 studentList.clear()
