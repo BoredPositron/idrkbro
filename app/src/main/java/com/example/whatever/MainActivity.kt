@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences(pref_key, Context.MODE_PRIVATE)
         route = sharedPreferences.getString(route_key, null)!!
         students = findViewById(R.id.StudentList)
-        dbRef = FirebaseDatabase.getInstance().getReference(route)
+        dbRef = FirebaseDatabase.getInstance().getReference("Students").child(route)
         studentList = ArrayList()
         studentAdapt = StudentAdapter(this, studentList)
         students.layoutManager = LinearLayoutManager(this)

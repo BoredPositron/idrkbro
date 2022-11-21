@@ -43,16 +43,20 @@ class sign_In : AppCompatActivity() {
         })
         logIn.setOnClickListener {
             val carerCode = codeBox.text.toString()
-            if (carerCodes[access.indexOf(carerCode)].Access == true) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                editor.putString(route_key, carerCodes[access.indexOf(carerCode)].RouteNumber)
-                editor.apply()
-            }else{
-                Toast.makeText(this, "You dont have access!", Toast.LENGTH_SHORT).show()
+            if (carerCode in access) {
+                if (carerCodes[access.indexOf(carerCode)].Access == true) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    editor.putString(route_key, carerCodes[access.indexOf(carerCode)].RouteNumber)
+                    editor.apply()
+                    codeBox.text.clear()
+                } else {
+                    Toast.makeText(this, "You dont have access!", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Invalid Code", Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 }

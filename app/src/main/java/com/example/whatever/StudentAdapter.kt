@@ -28,13 +28,34 @@ class StudentAdapter
             .addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.value == true){
-                    holder.studentIn.isEnabled = false
-                    holder.studentOut.isEnabled = true
+                    holder.status.text = "Out of Bus"
+                    holder.status.setOnClickListener {
+                        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
+                            .setValue(StudentInOut
+                                (currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}",false))
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Student in bus!", Toast.LENGTH_SHORT).show()
+                            }
+                    }
                 }else if (snapshot.value == false){
-                    holder.studentOut.isEnabled = false
-                    holder.studentIn.isEnabled = true
+                    holder.status.setOnClickListener {
+                        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
+                            .setValue(StudentInOut
+                                (currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}",true))
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Student in bus!", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                    holder.status.text = "In Bus"
                 }else{
-                    holder.studentOut.isEnabled = false
+                    holder.status.setOnClickListener {
+                        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
+                            .setValue(StudentInOut
+                                (currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}",false))
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Student in bus!", Toast.LENGTH_SHORT).show()
+                            }
+                    }
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -43,22 +64,6 @@ class StudentAdapter
 
         })
 
-        holder.studentIn.setOnClickListener {
-            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
-                .setValue(StudentInOut
-                    (currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}",true))
-                .addOnSuccessListener {
-                Toast.makeText(context, "Student in bus!", Toast.LENGTH_SHORT).show()
-            }
-        }
-        holder.studentOut.setOnClickListener {
-            dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
-                .setValue(StudentInOut
-                    (currentStudent.Name.toString(), "${LocalDateTime.now().hour}:${LocalDateTime.now().minute}:${LocalDateTime.now().second}",false))
-                .addOnSuccessListener {
-                Toast.makeText(context, "Student not in bus!", Toast.LENGTH_SHORT).show()
-            }
-        }
         holder.studentName.text = currentStudent.Name.toString()
     }
     override fun getItemCount(): Int {
@@ -66,7 +71,6 @@ class StudentAdapter
     }
     class StudentDataHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val studentName = itemView.findViewById<TextView>(R.id.student_Name)
-        val studentIn = itemView.findViewById<Button>(R.id.stdnt_In)
-        val studentOut = itemView.findViewById<Button>(R.id.stdnt_Out)
+        val status = itemView.findViewById<Button>(R.id.studentIn_out)
     }
 }

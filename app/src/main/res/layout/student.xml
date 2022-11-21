@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="7dp"
         android:layout_margin="15dp"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="#25294f"
+        >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -16,29 +18,26 @@
                 android:id="@+id/student_Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
                 android:text="Student Name"
-                android:layout_margin="20dp"/>
+                android:fontFamily="@font/mainfont"
+                android:textColor="@color/white"
+                android:layout_margin="20dp"
+                android:textSize="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
             <Button
-                android:id="@+id/stdnt_In"
+                android:id="@+id/studentIn_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="In"
-                app:layout_constraintLeft_toRightOf="@id/student_Name"
+                android:text="In Bus"
+                android:background="@drawable/button2"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/stdnt_Out"/>
-            <Button
-                android:id="@+id/stdnt_Out"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Out"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/stdnt_In"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:layout_margin="25dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/mainfont"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
