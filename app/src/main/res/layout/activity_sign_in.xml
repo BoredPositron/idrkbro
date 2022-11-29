@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#21253e"
+    android:background="@color/white"
     tools:context=".sign_In">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -12,7 +12,8 @@
         android:elevation="-1dp"
         android:layout_margin="10dp"
         android:layout_centerVertical="true"
-        app:cardBackgroundColor="#21253e"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="51dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,11 +22,11 @@
                 android:id="@+id/LoginText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/mainfont"
-                android:text="Login"
-                android:textColor="@color/white"
+                android:fontFamily="@font/mainfont2"
+                android:text="Log In"
+                android:textColor="#21409a"
                 android:layout_marginTop="10dp"
-                android:textSize="80px"
+                android:textSize="50dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -33,9 +34,9 @@
                 android:id="@+id/EnterBusCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:fontFamily="@font/mainfont"
-                android:textSize="40px"
+                android:textColor="#21409a"
+                android:fontFamily="@font/mainfont2"
+                android:textSize="20dp"
                 android:text="Enter Bus code to continue"
                 app:layout_constraintTop_toBottomOf="@id/LoginText"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -45,8 +46,8 @@ app:layout_constraintRight_toRightOf="parent"/>
             <EditText
                 android:id="@+id/cde"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/textbox"
+                android:layout_height="60dp"
+                android:background="@drawable/button"
                 android:hint="Enter Code"
                 android:fontFamily="@font/mainfont"
                 android:textAlignment="center"
@@ -56,7 +57,7 @@ app:layout_constraintRight_toRightOf="parent"/>
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/signIn"
                 android:inputType="numberPassword"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
             <Button
                 android:id="@+id/signIn"
                 android:layout_width="wrap_content"
@@ -65,13 +66,14 @@ app:layout_constraintRight_toRightOf="parent"/>
                 android:text="Enter"
                 android:textColor="@color/white"
                 app:layout_constraintTop_toBottomOf="@id/cde"
-                android:fontFamily="@font/mainfont"
+                android:fontFamily="@font/mainfont2"
                 android:layout_marginHorizontal="100dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="20dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

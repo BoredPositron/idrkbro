@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#232a4e"
+    android:background="@color/white"
     tools:context=".MainActivity">
-
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pac"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#017dc7"
+        android:layout_margin="15dp"
+        app:cardCornerRadius="15dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/presentCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Present:"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="10dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/mainfont"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/nextStop"/>
+            <TextView
+                android:id="@+id/nextStop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Next Stop:"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="10dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/mainfont"
+                android:textSize="20dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/pac"
         android:id="@+id/StudentList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        tools:listitem="@layout/student"
+        android:layout_marginBottom="10dp"/>
+</RelativeLayout>

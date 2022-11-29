@@ -6,7 +6,7 @@ class Carer {
     var Code: String? = null
     var Access: Boolean? = null
 
-    constructor(){}
+    constructor()
 
     constructor(name: String, RouteNumber: String, Code: String, access: Boolean){
         this.name = name

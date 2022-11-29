@@ -3,16 +3,14 @@ package com.example.whatever
 class Student {
     var Name: String? = null
     var PickupNo: String? = null
-    var DropNo: String? = null
     var RouteNo: String? = null
     var Grade: String? = null
 
-    constructor(){}
+    constructor()
 
-    constructor(Name: String, PickupNo: String, DropNo: String, RouteNo: String, Grade: String){
+    constructor(Name: String, PickupNo: String,  RouteNo: String, Grade: String, ot: Boolean? = null){
         this.Name = Name
         this.PickupNo = PickupNo
-        this.DropNo = DropNo
         this.RouteNo = RouteNo
         this.Grade = Grade
     }
