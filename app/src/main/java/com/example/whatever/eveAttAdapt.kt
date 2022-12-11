@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -30,9 +31,10 @@ class eveAttAdapt(
         val currentStudent = StudentList[position]
         holder.name.text = currentStudent.Name
         holder.consent.visibility = View.GONE
-        var att = "false"
+        holder.undo.visibility = View.GONE
         holder.no.setOnClickListener {
             Toast.makeText(context, "Ok!", Toast.LENGTH_SHORT).show()
+            holder.consent.visibility = View.GONE
         }
         holder.att.setOnClickListener {
             holder.consent.visibility = View.VISIBLE
@@ -43,8 +45,28 @@ class eveAttAdapt(
                         Toast.makeText(context, "Task completed successfully!", Toast.LENGTH_SHORT)
                             .show()
                         holder.att.visibility = View.GONE
+                        holder.undo.visibility = View.VISIBLE
                         holder.consent.visibility = View.GONE
-                        dbRef.child(currentStudent.RouteNo.toString()).child("Evening Count").setValue(ServerValue.increment(1))
+                        dbRef.child(currentStudent.RouteNo.toString()).child("EveningCount")
+                            .setValue(ServerValue.increment(1))
+                        dbRef.child(currentStudent.RouteNo.toString())
+                            .child(currentStudent.PickupNo.toString()).child("inBus").setValue(true)
+                    }
+            }
+        }
+        holder.undo.setOnClickListener {
+            holder.consent.visibility = View.VISIBLE
+            holder.yes.setOnClickListener {
+                dbRef.child(currentStudent.RouteNo.toString())
+                    .child(currentStudent.PickupNo.toString())
+                    .child("eveningAttendance").setValue(false).addOnSuccessListener {
+                        Toast.makeText(context, "Task completed successfully!", Toast.LENGTH_SHORT)
+                            .show()
+                        holder.att.visibility = View.VISIBLE
+                        holder.undo.visibility = View.GONE
+                        holder.consent.visibility = View.GONE
+                        dbRef.child(currentStudent.RouteNo.toString()).child("EveningCount")
+                            .setValue(ServerValue.increment(-1))
                     }
             }
         }
@@ -52,7 +74,10 @@ class eveAttAdapt(
         dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
             .child("eveningAttendance").get().addOnSuccessListener {
                 if (it.value == true) {
-                holder.att.visibility = View.GONE
+                    holder.att.visibility = View.GONE
+                    holder.undo.visibility = View.VISIBLE
+                } else {
+                    holder.att.visibility = View.VISIBLE
                 }
             }
     }
@@ -68,5 +93,6 @@ class eveAttAdapt(
         val consent = itemView.findViewById<CardView>(R.id.confirmDialogue)
         val yes = itemView.findViewById<Button>(R.id.Yes)
         val no = itemView.findViewById<Button>(R.id.No)
+        val undo = itemView.findViewById<ImageButton>(R.id.undo)
     }
 }

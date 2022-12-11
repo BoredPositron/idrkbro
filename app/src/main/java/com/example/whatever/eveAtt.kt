@@ -11,12 +11,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import java.time.LocalDate
 
 class eveAtt : AppCompatActivity() {
     private lateinit var nxt: Button
     private lateinit var attLst: RecyclerView
-    private lateinit var studList: ArrayList<Student>
     private lateinit var adapt: eveAttAdapt
+    private lateinit var studList: ArrayList<Student>
     private lateinit var dbRef: DatabaseReference
     private lateinit var dbRef2: DatabaseReference
     private lateinit var sharedPreferences: SharedPreferences
@@ -32,15 +33,16 @@ class eveAtt : AppCompatActivity() {
         nxt = findViewById(R.id.nextpage)
         presentCount = findViewById(R.id.PresentCount)
         dbRef = FirebaseDatabase.getInstance().getReference("Students").child(route)
-        dbRef2 = FirebaseDatabase.getInstance().getReference("Attendance").child(route)
+        dbRef2 = FirebaseDatabase.getInstance().getReference("Attendance")
+            .child(LocalDate.now().toString()).child(route).child("EveningCount")
         nxt.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, eveningTrack::class.java)
             startActivity(intent)
         }
         attLst = findViewById(R.id.attendanceList)
         studList = ArrayList()
         adapt = eveAttAdapt(this, studList)
-        attLst.layoutManager =LinearLayoutManager(this)
+        attLst.layoutManager = LinearLayoutManager(this)
         attLst.adapter = adapt
 
         dbRef.addValueEventListener(object : ValueEventListener {
@@ -52,12 +54,14 @@ class eveAtt : AppCompatActivity() {
                 }
                 adapt.notifyDataSetChanged()
             }
+
             override fun onCancelled(error: DatabaseError) {
             }
         })
-        dbRef2.child("Evening Count").addValueEventListener(object :ValueEventListener{
+        dbRef2.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                presentCount.text = snapshot.value.toString()
+                val present = snapshot.value
+                presentCount.text = "Present: ${present}"
             }
 
             override fun onCancelled(error: DatabaseError) {

@@ -48,7 +48,7 @@ class sign_In : AppCompatActivity() {
             val carerCode = codeBox.text.toString()
             if (carerCode in access) {
                 if (carerCodes[access.indexOf(carerCode)].Access == true) {
-                    if (LocalDateTime.now().hour > 13) {
+                    if (carerCode == "12345") {
                         val intent = Intent(this, eveAtt::class.java)
                         startActivity(intent)
                     } else {

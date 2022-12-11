@@ -13,6 +13,13 @@
         android:theme="@style/Theme.Whatever"
         tools:targetApi="31">
         <activity
+            android:name=".eveningTrack"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".eveAtt"
             android:exported="false">
             <meta-data

@@ -1,7 +1,8 @@
 package com.example.whatever
 
 class StudentInOut {
-    var in_Out_Time: String? = null
+    var inTime: String? = null
+    var outTime: String? = null
     var name: String? = null
     var inBus: Boolean? = null
     var morningAttendance: Boolean? = null
@@ -10,14 +11,16 @@ class StudentInOut {
     constructor()
 
     constructor(
-        name: String,
-        outTime: String?,
-        inBus: Boolean,
+        name: String? = null,
+        outTime: String? = null,
+        inTime: String? = null,
+        inBus: Boolean? = null,
         morningAttendance: Boolean? = null,
         eveningAttendance: Boolean? = null
     ) {
         this.name = name
-        this.in_Out_Time = outTime
+        this.inTime = inTime
+        this.outTime = outTime
         this.inBus = inBus
         this.morningAttendance = morningAttendance
         this.eveningAttendance = eveningAttendance

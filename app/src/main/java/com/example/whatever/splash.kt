@@ -12,7 +12,7 @@ class splash : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         skl = findViewById(R.id.sklogo)
         skl.alpha = 0f
-        skl.animate().setDuration(1500).alpha(1f).withEndAction{
+        skl.animate().setDuration(750).alpha(1f).withEndAction{
             val intent = Intent(this, sign_In::class.java)
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
