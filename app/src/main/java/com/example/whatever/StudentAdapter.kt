@@ -49,6 +49,7 @@ class StudentAdapter
         holder.ot.setOnClickListener {
             holder.con.visibility = View.VISIBLE
             holder.yes.setOnClickListener {
+
                 holder.con.visibility = View.GONE
                 dbRef.child(currentStudent.RouteNo.toString())
                     .child(currentStudent.PickupNo.toString())
@@ -182,5 +183,6 @@ class StudentAdapter
         val ot = itemView.findViewById<Button>(R.id.ot)
         val undo = itemView.findViewById<ImageButton>(R.id.undo)
         val undo1 = itemView.findViewById<ImageButton>(R.id.undo1)
+        val studentCard = itemView.findViewById<CardView>()
     }
 }

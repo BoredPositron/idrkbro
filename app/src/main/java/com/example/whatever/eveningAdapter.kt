@@ -1,6 +1,7 @@
 package com.example.whatever
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,7 @@ class eveningAdapter(
             holder.con.visibility = View.VISIBLE
             holder.yes.setOnClickListener {
                 holder.con.visibility = View.GONE
+                holder.studentCard.setCardBackgroundColor(Color.GRAY)
                 dbRef.child(currentStudent.RouteNo.toString())
                     .child(currentStudent.PickupNo.toString()).child("inBus").setValue(false)
                     .addOnSuccessListener {
@@ -68,6 +70,7 @@ class eveningAdapter(
             holder.yes.setOnClickListener {
                 holder.con.visibility = View.GONE
                 holder.undo.visibility = View.GONE
+                holder.studentCard.setCardBackgroundColor(Color.parseColor("#21409a"))
                 dbRef.child(currentStudent.RouteNo.toString())
                     .child(currentStudent.PickupNo.toString()).child("inBus").setValue(true)
                     .addOnSuccessListener {
@@ -84,22 +87,29 @@ class eveningAdapter(
         dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
             .child("inBus").get().addOnSuccessListener {
                 if (it.value == true) {
+                    holder.studentCard.setCardBackgroundColor(Color.parseColor("#21409a"))
                     holder.undo.visibility = View.GONE
                     holder.outBus.visibility = View.VISIBLE
                     holder.inBus.visibility = View.GONE
                     holder.undo1.visibility = View.GONE
                 } else if (it.value == false) {
+                    holder.studentCard.setCardBackgroundColor(Color.GRAY)
                     holder.undo.visibility = View.VISIBLE
                     holder.outBus.visibility = View.GONE
                     holder.inBus.visibility = View.GONE
                     holder.undo1.visibility = View.GONE
                 } else {
+                    holder.studentCard.setCardBackgroundColor(Color.parseColor("#21409a"))
                     holder.undo.visibility = View.GONE
                     holder.outBus.visibility = View.VISIBLE
                     holder.undo1.visibility = View.GONE
                     holder.inBus.visibility = View.GONE
                 }
             }
+        holder.no.setOnClickListener {
+            Toast.makeText(context, "Ok!", Toast.LENGTH_SHORT).show()
+            holder.con.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int {
@@ -117,5 +127,6 @@ class eveningAdapter(
         val ot = itemView.findViewById<Button>(R.id.ot)
         val undo = itemView.findViewById<ImageButton>(R.id.undo)
         val undo1 = itemView.findViewById<ImageButton>(R.id.undo1)
+        val studentCard = itemView.findViewById<CardView>(R.id.studentCard)
     }
 }

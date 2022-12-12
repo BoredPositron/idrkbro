@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
+        android:id="@+id/studentCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="7dp"
@@ -14,7 +15,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <TextView
                 android:id="@+id/student_Name"
                 android:layout_width="wrap_content"
