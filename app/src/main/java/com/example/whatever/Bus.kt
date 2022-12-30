@@ -6,6 +6,7 @@ class Bus {
     var previousStop: String? = null
     var nextStop: String? = null
 
+
     constructor()
 
     constructor(routeNumber: String?, Carer: String?, previousStop: String?, nextStop: String?){

@@ -1,9 +1,13 @@
 package com.example.whatever
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AndroidRuntimeException
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +21,7 @@ class eveningTrack : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var nextStop: TextView
     private lateinit var dbRef2: DatabaseReference
+    private lateinit var undo: ImageButton
     var pref_key = "prefs"
     var route_key = "route"
     var route = ""
@@ -30,11 +35,16 @@ class eveningTrack : AppCompatActivity() {
         students = findViewById(R.id.studs)
         dbRef2 = FirebaseDatabase.getInstance().getReference("Buses").child(route)
         nextStop = findViewById(R.id.nextStop)
+        undo = findViewById(R.id.notAtt)
         students.layoutManager = LinearLayoutManager(this)
         studentList = ArrayList()
         evenAdapter = eveningAdapter(this, studentList)
         students.adapter = evenAdapter
         dbRef = FirebaseDatabase.getInstance().getReference("Students").child(route)
+        undo.setOnClickListener {
+            val intent = Intent(this, eveAtt::class.java)
+            startActivity(intent)
+        }
         dbRef.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (i in snapshot.children){

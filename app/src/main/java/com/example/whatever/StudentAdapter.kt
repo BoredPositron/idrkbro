@@ -1,6 +1,7 @@
 package com.example.whatever
 
 import android.content.Context
+import android.graphics.Color
 import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,10 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.TranslatorOptions
 import org.w3c.dom.Text
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -41,18 +46,18 @@ class StudentAdapter
             nextStudent = "School"
         }
         holder.con.visibility = View.GONE
-        holder.grade.text = "Grade: N/A"
-        holder.studentName.text = currentStudent.Name
+//        holder.studentName.text = currentStudent.Name
+        tlte(currentStudent.Name.toString(), "English", holder.studentName)
         holder.outBus.visibility = View.GONE
         holder.undo.visibility = View.GONE
         holder.undo1.visibility = View.GONE
         holder.ot.setOnClickListener {
             holder.con.visibility = View.VISIBLE
             holder.yes.setOnClickListener {
-
+                holder.studentCard.setCardBackgroundColor(Color.GRAY)
                 holder.con.visibility = View.GONE
-                dbRef.child(currentStudent.RouteNo.toString())
-                    .child(currentStudent.PickupNo.toString())
+                dbRef.child(currentStudent.Route.toString())
+                    .child(currentStudent.Pickup.toString())
                     .setValue(
                         StudentInOut(
                             name = currentStudent.Name.toString(),
@@ -60,13 +65,13 @@ class StudentAdapter
                             inBus = false,
                         )
                     ).addOnSuccessListener {
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("previousStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("previousStop")
                             .setValue(currentStudent.Name.toString())
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("nextStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("nextStop")
                             .setValue(nextStudent)
                         holder.inBus.visibility = View.GONE
                         holder.ot.visibility = View.GONE
-                        dbRef.child(currentStudent.RouteNo.toString()).child("Morning Count")
+                        dbRef.child(currentStudent.Route.toString()).child("Morning Count")
                             .setValue(ServerValue.increment(0))
                         holder.con.visibility = View.GONE
                         holder.undo1.visibility = View.VISIBLE
@@ -76,20 +81,21 @@ class StudentAdapter
         holder.undo1.setOnClickListener {
             holder.con.visibility = View.VISIBLE
             holder.yes.setOnClickListener {
+                holder.studentCard.setCardBackgroundColor(Color.parseColor("#3a3b3c"))
                 holder.con.visibility = View.GONE
-                dbRef.child(currentStudent.RouteNo.toString())
-                    .child(currentStudent.PickupNo.toString())
+                dbRef.child(currentStudent.Route.toString())
+                    .child(currentStudent.Pickup.toString())
                     .setValue(
                         StudentInOut()
                     ).addOnSuccessListener {
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("previousStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("previousStop")
                             .setValue(currentStudent.Name.toString())
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("nextStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("nextStop")
                             .setValue(nextStudent)
                         holder.inBus.visibility = View.VISIBLE
                         holder.ot.visibility = View.VISIBLE
                         holder.undo1.visibility = View.GONE
-                        dbRef.child(currentStudent.RouteNo.toString()).child("Morning Count")
+                        dbRef.child(currentStudent.Route.toString()).child("Morning Count")
                             .setValue(ServerValue.increment(0))
                     }
             }
@@ -97,20 +103,21 @@ class StudentAdapter
         holder.undo.setOnClickListener {
             holder.con.visibility = View.VISIBLE
             holder.yes.setOnClickListener {
-                holder.con.visibility = View.GONE   
-                dbRef.child(currentStudent.RouteNo.toString())
-                    .child(currentStudent.PickupNo.toString())
+                holder.studentCard.setCardBackgroundColor(Color.parseColor("#3a3b3c"))
+                holder.con.visibility = View.GONE
+                dbRef.child(currentStudent.Route.toString())
+                    .child(currentStudent.Pickup.toString())
                     .setValue(
                         StudentInOut()
                     ).addOnSuccessListener {
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("previousStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("previousStop")
                             .setValue(currentStudent.Name.toString())
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("nextStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("nextStop")
                             .setValue(nextStudent)
                         holder.inBus.visibility = View.VISIBLE
                         holder.ot.visibility = View.VISIBLE
                         holder.undo.visibility = View.GONE
-                        dbRef.child(currentStudent.RouteNo.toString()).child("Morning Count")
+                        dbRef.child(currentStudent.Route.toString()).child("Morning Count")
                             .setValue(ServerValue.increment(-1))
                     }
             }
@@ -122,9 +129,10 @@ class StudentAdapter
         holder.inBus.setOnClickListener {
             holder.con.visibility = View.VISIBLE
             holder.yes.setOnClickListener {
+                holder.studentCard.setCardBackgroundColor(Color.GRAY)
                 holder.con.visibility = View.GONE
-                dbRef.child(currentStudent.RouteNo.toString())
-                    .child(currentStudent.PickupNo.toString())
+                dbRef.child(currentStudent.Route.toString())
+                    .child(currentStudent.Pickup.toString())
                     .setValue(
                         StudentInOut(
                             inTime = LocalTime.now().toString(),
@@ -133,13 +141,13 @@ class StudentAdapter
                             name = currentStudent.Name
                         )
                     ).addOnSuccessListener {
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("previousStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("previousStop")
                             .setValue(currentStudent.Name.toString())
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("nextStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("nextStop")
                             .setValue(nextStudent)
                         holder.inBus.visibility = View.GONE
                         holder.ot.visibility = View.GONE
-                        dbRef.child(currentStudent.RouteNo.toString()).child("Morning Count")
+                        dbRef.child(currentStudent.Route.toString()).child("Morning Count")
                             .setValue(ServerValue.increment(1))
                         holder.con.visibility = View.GONE
                         holder.undo.visibility = View.VISIBLE
@@ -147,19 +155,22 @@ class StudentAdapter
             }
 
         }
-        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
+        dbRef.child(currentStudent.Route.toString()).child(currentStudent.Pickup.toString())
             .child("inBus").get().addOnSuccessListener {
                 if (it.value == true) {
+                    holder.studentCard.setCardBackgroundColor(Color.GRAY)
                     holder.inBus.visibility = View.GONE
                     holder.con.visibility = View.GONE
                     holder.ot.visibility = View.GONE
                     holder.undo.visibility = View.VISIBLE
                 } else if (it.value == false) {
+                    holder.studentCard.setCardBackgroundColor(Color.parseColor("#3a3b3c"))
                     holder.inBus.visibility = View.GONE
                     holder.con.visibility = View.GONE
                     holder.ot.visibility = View.GONE
                     holder.undo1.visibility = View.VISIBLE
                 } else {
+                    holder.studentCard.setCardBackgroundColor(Color.parseColor("#3a3b3c"))
                     holder.inBus.visibility = View.VISIBLE
                     holder.con.visibility = View.GONE
                     holder.ot.visibility = View.VISIBLE
@@ -179,10 +190,54 @@ class StudentAdapter
         val yes = itemView.findViewById<Button>(R.id.Yes)
         val no = itemView.findViewById<Button>(R.id.No)
         val con = itemView.findViewById<CardView>(R.id.confirmDialogue)
-        val grade = itemView.findViewById<TextView>(R.id.grade)
         val ot = itemView.findViewById<Button>(R.id.ot)
         val undo = itemView.findViewById<ImageButton>(R.id.undo)
         val undo1 = itemView.findViewById<ImageButton>(R.id.undo1)
-        val studentCard = itemView.findViewById<CardView>()
+        val studentCard = itemView.findViewById<CardView>(R.id.studentCard)
+    }
+    private fun tlte(text: String, language: String, txtField: TextView){
+        if (language == "English"){
+            txtField.text = text
+        } else if(language == "Hindi") {
+            val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
+                .setTargetLanguage(TranslateLanguage.HINDI).build()
+            val tran = Translation.getClient(options)
+            var conditions = DownloadConditions.Builder().requireWifi().build()
+            tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                tran.translate(text).addOnSuccessListener {
+                    txtField.text = it.toString()
+                }
+            }
+        } else if (language == "Tamil"){
+            val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
+                .setTargetLanguage(TranslateLanguage.TAMIL).build()
+            val tran = Translation.getClient(options)
+            var conditions = DownloadConditions.Builder().requireWifi().build()
+            tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                tran.translate(text).addOnSuccessListener {
+                    txtField.text = it.toString()
+                }
+            }
+        } else if (language == "Kannada"){
+            val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
+                .setTargetLanguage(TranslateLanguage.KANNADA).build()
+            val tran = Translation.getClient(options)
+            var conditions = DownloadConditions.Builder().requireWifi().build()
+            tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                tran.translate(text).addOnSuccessListener {
+                    txtField.text = it.toString()
+                }
+            }
+        } else if (language == "Telugu"){
+            val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
+                .setTargetLanguage(TranslateLanguage.TELUGU).build()
+            val tran = Translation.getClient(options)
+            var conditions = DownloadConditions.Builder().requireWifi().build()
+            tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                tran.translate(text).addOnSuccessListener {
+                    txtField.text = it.toString()
+                }
+            }
+        }
     }
 }

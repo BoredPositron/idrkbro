@@ -1,6 +1,7 @@
 package com.example.whatever
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ class eveAttAdapt(
     val dbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Attendance")
         .child(LocalDate.now().toString()),
 ) : RecyclerView.Adapter<eveAttAdapt.StudentData>() {
-
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentData {
         val view: View = LayoutInflater.from(context).inflate(R.layout.attendance, parent, false)
         return StudentData(view)
@@ -39,45 +40,49 @@ class eveAttAdapt(
         holder.att.setOnClickListener {
             holder.consent.visibility = View.VISIBLE
             holder.yes.setOnClickListener {
-                dbRef.child(currentStudent.RouteNo.toString())
-                    .child(currentStudent.PickupNo.toString())
+                dbRef.child(currentStudent.Route.toString())
+                    .child(currentStudent.Pickup.toString())
                     .child("eveningAttendance").setValue(true).addOnSuccessListener {
                         Toast.makeText(context, "Task completed successfully!", Toast.LENGTH_SHORT)
                             .show()
+                        holder.studentCard.setCardBackgroundColor(Color.GRAY)
                         holder.att.visibility = View.GONE
                         holder.undo.visibility = View.VISIBLE
                         holder.consent.visibility = View.GONE
-                        dbRef.child(currentStudent.RouteNo.toString()).child("EveningCount")
+                        dbRef.child(currentStudent.Route.toString()).child("EveningCount")
                             .setValue(ServerValue.increment(1))
-                        dbRef.child(currentStudent.RouteNo.toString())
-                            .child(currentStudent.PickupNo.toString()).child("inBus").setValue(true)
+                        dbRef.child(currentStudent.Route.toString())
+                            .child(currentStudent.Pickup.toString()).child("inBus").setValue(true)
                     }
             }
         }
         holder.undo.setOnClickListener {
             holder.consent.visibility = View.VISIBLE
             holder.yes.setOnClickListener {
-                dbRef.child(currentStudent.RouteNo.toString())
-                    .child(currentStudent.PickupNo.toString())
+                dbRef.child(currentStudent.Route.toString())
+                    .child(currentStudent.Pickup.toString())
                     .child("eveningAttendance").setValue(false).addOnSuccessListener {
                         Toast.makeText(context, "Task completed successfully!", Toast.LENGTH_SHORT)
                             .show()
+                        holder.studentCard.setCardBackgroundColor(Color.parseColor("#3a3b3c"))
                         holder.att.visibility = View.VISIBLE
                         holder.undo.visibility = View.GONE
                         holder.consent.visibility = View.GONE
-                        dbRef.child(currentStudent.RouteNo.toString()).child("EveningCount")
+                        dbRef.child(currentStudent.Route.toString()).child("EveningCount")
                             .setValue(ServerValue.increment(-1))
                     }
             }
         }
 
-        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
+        dbRef.child(currentStudent.Route.toString()).child(currentStudent.Pickup.toString())
             .child("eveningAttendance").get().addOnSuccessListener {
                 if (it.value == true) {
                     holder.att.visibility = View.GONE
+                    holder.studentCard.setCardBackgroundColor(Color.GRAY)
                     holder.undo.visibility = View.VISIBLE
                 } else {
                     holder.att.visibility = View.VISIBLE
+                    holder.studentCard.setCardBackgroundColor(Color.parseColor("#3a3b3c"))
                 }
             }
     }
@@ -94,5 +99,6 @@ class eveAttAdapt(
         val yes = itemView.findViewById<Button>(R.id.Yes)
         val no = itemView.findViewById<Button>(R.id.No)
         val undo = itemView.findViewById<ImageButton>(R.id.undo)
+        val studentCard = itemView.findViewById<CardView>(R.id.studentCard)
     }
 }

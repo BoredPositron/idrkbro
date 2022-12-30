@@ -34,10 +34,12 @@ class eveAtt : AppCompatActivity() {
         presentCount = findViewById(R.id.PresentCount)
         dbRef = FirebaseDatabase.getInstance().getReference("Students").child(route)
         dbRef2 = FirebaseDatabase.getInstance().getReference("Attendance")
-            .child(LocalDate.now().toString()).child(route).child("EveningCount")
+            .child(LocalDate.now().toString()).child(route)
         nxt.setOnClickListener {
-            val intent = Intent(this, eveningTrack::class.java)
-            startActivity(intent)
+            dbRef2.child("eAt").setValue(true).addOnSuccessListener {
+                val intent = Intent(this, eveningTrack::class.java)
+                startActivity(intent)
+            }
         }
         attLst = findViewById(R.id.attendanceList)
         studList = ArrayList()
@@ -58,7 +60,7 @@ class eveAtt : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
             }
         })
-        dbRef2.addValueEventListener(object : ValueEventListener {
+        dbRef2.child("EveningCount").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val present = snapshot.value
                 presentCount.text = "Present: ${present}"

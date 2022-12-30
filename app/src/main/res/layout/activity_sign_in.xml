@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#242526"
     tools:context=".sign_In">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="-1dp"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         android:layout_centerVertical="true"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="#242526"
+
         app:cardCornerRadius="51dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/mainfont2"
                 android:text="Log In"
-                android:textColor="#21409a"
+                android:textColor="#ffde3f"
                 android:layout_marginTop="10dp"
                 android:textSize="50dp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -34,7 +35,7 @@
                 android:id="@+id/EnterBusCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#21409a"
+                android:textColor="#ffde3f"
                 android:fontFamily="@font/mainfont2"
                 android:textSize="20dp"
                 android:text="Enter Bus code to continue"
@@ -52,17 +53,17 @@ app:layout_constraintRight_toRightOf="parent"/>
                 android:fontFamily="@font/mainfont"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@id/EnterBusCode"
-                android:layout_marginHorizontal="50dp"
+                android:layout_marginHorizontal="30dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/signIn"
                 android:inputType="numberPassword"
-                android:textColor="@color/white" />
+                android:textColor="#ffde3f" />
             <Button
                 android:id="@+id/signIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button"
+                android:background="@drawable/button2"
                 android:text="Enter"
                 android:textColor="@color/white"
                 app:layout_constraintTop_toBottomOf="@id/cde"

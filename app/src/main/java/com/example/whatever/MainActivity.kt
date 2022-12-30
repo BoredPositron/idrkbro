@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 presentCount = snapshot.value.toString()
                 presC.text = "Present: ${presentCount}"
-            }
+            }   
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")

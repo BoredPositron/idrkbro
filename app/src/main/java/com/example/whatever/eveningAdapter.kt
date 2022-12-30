@@ -48,16 +48,16 @@ class eveningAdapter(
             holder.yes.setOnClickListener {
                 holder.con.visibility = View.GONE
                 holder.studentCard.setCardBackgroundColor(Color.GRAY)
-                dbRef.child(currentStudent.RouteNo.toString())
-                    .child(currentStudent.PickupNo.toString()).child("inBus").setValue(false)
+                dbRef.child(currentStudent.Route.toString())
+                    .child(currentStudent.Pickup.toString()).child("inBus").setValue(false)
                     .addOnSuccessListener {
-                        dbRef.child(currentStudent.RouteNo.toString())
-                            .child(currentStudent.PickupNo.toString()).child("outTime")
+                        dbRef.child(currentStudent.Route.toString())
+                            .child(currentStudent.Pickup.toString()).child("outTime")
                             .setValue(LocalTime.now().toString())
                         holder.outBus.visibility = View.GONE
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("nextStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("nextStop")
                             .setValue(nextStudent)
-                        dbRef2.child(currentStudent.RouteNo.toString()).child("previousStop")
+                        dbRef2.child(currentStudent.Route.toString()).child("previousStop")
                             .setValue(currentStudent.Name)
                         holder.undo.visibility = View.VISIBLE
                         holder.inBus.visibility = View.GONE
@@ -70,24 +70,24 @@ class eveningAdapter(
             holder.yes.setOnClickListener {
                 holder.con.visibility = View.GONE
                 holder.undo.visibility = View.GONE
-                holder.studentCard.setCardBackgroundColor(Color.parseColor("#21409a"))
-                dbRef.child(currentStudent.RouteNo.toString())
-                    .child(currentStudent.PickupNo.toString()).child("inBus").setValue(true)
+                holder.studentCard.setCardBackgroundColor(Color.parseColor("#3a3b3c"))
+                dbRef.child(currentStudent.Route.toString())
+                    .child(currentStudent.Pickup.toString()).child("inBus").setValue(true)
                     .addOnSuccessListener {
                         holder.outBus.visibility = View.VISIBLE
                         Toast.makeText(context, "Task completed successfully!", Toast.LENGTH_SHORT)
                             .show()
                         holder.undo.visibility = View.GONE
-                        dbRef.child(currentStudent.RouteNo.toString())
-                            .child(currentStudent.PickupNo.toString()).child("outTime")
+                        dbRef.child(currentStudent.Route.toString())
+                            .child(currentStudent.Pickup.toString()).child("outTime")
                             .setValue(null)
                     }
             }
         }
-        dbRef.child(currentStudent.RouteNo.toString()).child(currentStudent.PickupNo.toString())
+        dbRef.child(currentStudent.Route.toString()).child(currentStudent.Pickup.toString())
             .child("inBus").get().addOnSuccessListener {
                 if (it.value == true) {
-                    holder.studentCard.setCardBackgroundColor(Color.parseColor("#21409a"))
+                    holder.studentCard.setCardBackgroundColor(Color.parseColor("#3a3b3c"))
                     holder.undo.visibility = View.GONE
                     holder.outBus.visibility = View.VISIBLE
                     holder.inBus.visibility = View.GONE
@@ -99,7 +99,7 @@ class eveningAdapter(
                     holder.inBus.visibility = View.GONE
                     holder.undo1.visibility = View.GONE
                 } else {
-                    holder.studentCard.setCardBackgroundColor(Color.parseColor("#21409a"))
+                    holder.studentCard.setCardBackgroundColor(Color.parseColor("#3a3b3c"))
                     holder.undo.visibility = View.GONE
                     holder.outBus.visibility = View.VISIBLE
                     holder.undo1.visibility = View.GONE
@@ -123,7 +123,6 @@ class eveningAdapter(
         val yes = itemView.findViewById<Button>(R.id.Yes)
         val no = itemView.findViewById<Button>(R.id.No)
         val con = itemView.findViewById<CardView>(R.id.confirmDialogue)
-        val grade = itemView.findViewById<TextView>(R.id.grade)
         val ot = itemView.findViewById<Button>(R.id.ot)
         val undo = itemView.findViewById<ImageButton>(R.id.undo)
         val undo1 = itemView.findViewById<ImageButton>(R.id.undo1)
