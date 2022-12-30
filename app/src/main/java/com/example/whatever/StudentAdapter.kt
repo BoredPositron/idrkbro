@@ -195,49 +195,50 @@ class StudentAdapter
         val undo1 = itemView.findViewById<ImageButton>(R.id.undo1)
         val studentCard = itemView.findViewById<CardView>(R.id.studentCard)
     }
-    private fun tlte(text: String, language: String, txtField: TextView){
-        if (language == "English"){
-            txtField.text = text
-        } else if(language == "Hindi") {
-            val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
-                .setTargetLanguage(TranslateLanguage.HINDI).build()
-            val tran = Translation.getClient(options)
-            var conditions = DownloadConditions.Builder().requireWifi().build()
-            tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
-                tran.translate(text).addOnSuccessListener {
-                    txtField.text = it.toString()
+
+        private fun tlte(text: String, language: String, txtField: TextView) {
+            if (language == "English") {
+                txtField.text = text
+            } else if (language == "Hindi") {
+                val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
+                    .setTargetLanguage(TranslateLanguage.HINDI).build()
+                val tran = Translation.getClient(options)
+                var conditions = DownloadConditions.Builder().requireWifi().build()
+                tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                    tran.translate(text).addOnSuccessListener {
+                        txtField.text = it.toString()
+                    }
                 }
-            }
-        } else if (language == "Tamil"){
-            val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
-                .setTargetLanguage(TranslateLanguage.TAMIL).build()
-            val tran = Translation.getClient(options)
-            var conditions = DownloadConditions.Builder().requireWifi().build()
-            tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
-                tran.translate(text).addOnSuccessListener {
-                    txtField.text = it.toString()
+            } else if (language == "Tamil") {
+                val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
+                    .setTargetLanguage(TranslateLanguage.TAMIL).build()
+                val tran = Translation.getClient(options)
+                var conditions = DownloadConditions.Builder().requireWifi().build()
+                tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                    tran.translate(text).addOnSuccessListener {
+                        txtField.text = it.toString()
+                    }
                 }
-            }
-        } else if (language == "Kannada"){
-            val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
-                .setTargetLanguage(TranslateLanguage.KANNADA).build()
-            val tran = Translation.getClient(options)
-            var conditions = DownloadConditions.Builder().requireWifi().build()
-            tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
-                tran.translate(text).addOnSuccessListener {
-                    txtField.text = it.toString()
+            } else if (language == "Kannada") {
+                val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
+                    .setTargetLanguage(TranslateLanguage.KANNADA).build()
+                val tran = Translation.getClient(options)
+                var conditions = DownloadConditions.Builder().requireWifi().build()
+                tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                    tran.translate(text).addOnSuccessListener {
+                        txtField.text = it.toString()
+                    }
                 }
-            }
-        } else if (language == "Telugu"){
-            val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
-                .setTargetLanguage(TranslateLanguage.TELUGU).build()
-            val tran = Translation.getClient(options)
-            var conditions = DownloadConditions.Builder().requireWifi().build()
-            tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
-                tran.translate(text).addOnSuccessListener {
-                    txtField.text = it.toString()
+            } else if (language == "Telugu") {
+                val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH)
+                    .setTargetLanguage(TranslateLanguage.TELUGU).build()
+                val tran = Translation.getClient(options)
+                var conditions = DownloadConditions.Builder().requireWifi().build()
+                tran.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                    tran.translate(text).addOnSuccessListener {
+                        txtField.text = it.toString()
+                    }
                 }
             }
         }
-    }
 }
